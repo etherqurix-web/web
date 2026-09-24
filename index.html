@@ -7,37 +7,44 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{--ink:#06111f;--body:#33475e;--ice:#C6E6FD;--sky:#80AAD3;--steel:#5B86B6;--slate:#376593;--navy:#1B3554;--mag:#A81251;--mono:'JetBrains Mono',ui-monospace,monospace}
+html{color-scheme:light}
 *{margin:0;padding:0;box-sizing:border-box;user-select:none}
-html,body{width:100%;background:#f6f9fd;-ms-overflow-style:none;scrollbar-width:none}
-body{min-height:900vh;font-family:'Space Grotesk',sans-serif;color:var(--ink);overflow-x:hidden;cursor:none}
+html,body{width:100%;background:#f6f9fd;-ms-overflow-style:none;scrollbar-width:none;color:#06111f}
+body{min-height:900vh;font-family:'Space Grotesk',sans-serif;color:#06111f;overflow-x:hidden;cursor:none}
 *{cursor:none!important}
 ::-webkit-scrollbar{display:none;width:0}
-#webgl{position:fixed;inset:0;width:100%;height:100%;z-index:1;outline:none;background:#f6f9fd}
+#webgl{position:fixed;inset:0;width:100%;height:100%;z-index:1;outline:none}
 
-.cursor-inner{position:fixed;top:0;left:0;width:6px;height:6px;border:2px solid var(--ink);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999}
+.cursor-inner{position:fixed;top:0;left:0;width:6px;height:6px;border:2px solid #06111f;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999}
 .cursor-outer{position:fixed;top:0;left:0;width:40px;height:40px;border:1.5px solid rgba(6,17,31,.5);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9998;transition:width .3s,height .3s,border-color .3s}
-body.hot .cursor-outer{width:56px;height:56px;border-color:var(--mag)}
+body.hot .cursor-outer{width:56px;height:56px;border-color:#A81251}
+@media(hover:none),(pointer:coarse){
+  .cursor-inner,.cursor-outer{display:none!important}
+  *,body{cursor:auto!important}
+}
 
-.cinematic-container{position:fixed;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;justify-content:flex-end;padding:0 60px 40px;box-sizing:border-box}
+.cinematic-container{position:fixed;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:0 60px 40px;box-sizing:border-box}
 .main-header{display:flex;justify-content:space-between;align-items:center;width:100%;z-index:20;pointer-events:auto;padding:20px 0}
-.brand{font-size:14px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--ink)}
+.brand{font-size:14px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:#06111f}
 .header-nav{display:flex;align-items:center;gap:24px}
-.nav-link{color:var(--ink);text-decoration:none;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;transition:color .3s}
+.nav-link{color:#06111f;text-decoration:none;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;transition:color .3s}
+.nav-link:hover{color:#A81251}
 .header-nav .nav-link{position:relative}
-.header-nav .nav-link::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:var(--mag);transform:scaleX(0);transform-origin:center;transition:transform .3s ease}
+.header-nav .nav-link::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:#A81251;transform:scaleX(0);transform-origin:center;transition:transform .3s ease}
 .header-nav .nav-link.active::after{transform:scaleX(1)}
-.header-nav .nav-link.active,.header-nav .nav-link:hover{color:var(--mag)}
+.header-nav .nav-link.active{color:#1B3554}
 .nav-dot{width:3px;height:3px;background:rgba(27,53,84,.35);border-radius:50%}
-.contact-btn,.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:var(--ink);color:#fff;text-decoration:none;font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;border-radius:20px;transition:transform .3s,background .3s}
-.btn-circle{width:6px;height:6px;border:1px solid var(--mag);border-radius:50%;background:var(--mag)}
-.contact-btn:hover,.cta-btn:hover{transform:scale(1.05);background:var(--mag)}
-.contact-btn .btn-circle,.cta-btn .btn-circle{border-color:#fff;background:#fff}
+
+.contact-btn,.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:#06111f;color:#fff!important;text-decoration:none;font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;border-radius:20px;transition:transform .3s,background .3s}
+.btn-circle{width:6px;height:6px;border:1px solid #A81251;border-radius:50%;background:#A81251}
+.contact-btn:hover,.cta-btn:hover{transform:scale(1.05);background:#A81251}
+.contact-btn:hover .btn-circle,.cta-btn:hover .btn-circle{border-color:#fff;background:#fff}
 
 .slide{position:absolute;bottom:12%;pointer-events:none}
 #slide-1{left:0;width:100%}
 #slide-1 .slide-title{margin-left:60px}
 #slide-1 .desc-row{position:relative;display:flex;width:100%}
-#slide-1 .col-1{margin-left:60px;width:calc(25vw - 60px);color:var(--navy);font-weight:500}
+#slide-1 .col-1{margin-left:60px;width:calc(25vw - 60px);color:#1B3554;font-weight:500}
 #slide-1 .col-2{position:absolute;left:calc(25vw + 40px);width:calc(25vw - 60px)}
 #slide-1 .eyebrow{margin:0 0 22px 60px}
 #slide-2{left:0;width:100%}
@@ -51,72 +58,81 @@ body.hot .cursor-outer{width:56px;height:56px;border-color:var(--mag)}
 #slide-7{left:60px;max-width:640px}
 #slide-4 .slide-desc,#slide-6 .slide-desc,#slide-7 .slide-desc{max-width:520px}
 
-.slide-title{font-size:clamp(40px,6.2vw,96px);line-height:1;font-weight:300;letter-spacing:-1.5px;margin-bottom:20px;color:var(--ink)}
-.slide-desc,.rev{font-size:16px;line-height:1.7;font-weight:600;color:var(--ink);letter-spacing:.2px;opacity:0;text-shadow:0 1px 2px rgba(255,255,255,.55);transform:translateY(30px);transition:opacity .8s cubic-bezier(.25,1,.5,1),transform .8s cubic-bezier(.25,1,.5,1);transition-delay:.4s}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--slate);text-transform:uppercase}
-.slide.active .slide-desc,.slide.active .rev{opacity:1;transform:translateY(0)}
+.slide-title{font-size:clamp(40px,6.2vw,96px);text-wrap:balance;line-height:1;font-weight:300;letter-spacing:-1.5px;margin-bottom:20px;color:#06111f}
+.slide-desc,.rev{font-size:16px;line-height:1.7;font-weight:600;color:#06111f;letter-spacing:.2px;opacity:0;text-shadow:0 1px 2px rgba(255,255,255,.55);transform:translateY(30px);transition:opacity .8s cubic-bezier(.25,1,.5,1),transform .8s cubic-bezier(.25,1,.5,1);transition-delay:.4s}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:#376593;text-transform:uppercase}
+.slide.active .slide-desc,.slide.active .rev{opacity:1;transform:none}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.chip{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;padding:7px 12px;border:1px solid rgba(27,53,84,.35);border-radius:14px;color:var(--navy);background:rgba(255,255,255,.55);text-transform:uppercase;transition:border-color .3s,background .3s}
-.slide.active .chip{border-color:var(--mag);background:rgba(168,18,81,.08)}
+.chip{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;padding:7px 12px;border:1px solid rgba(27,53,84,.35);border-radius:14px;color:#1B3554;background:rgba(255,255,255,.55);text-transform:uppercase;transition:border-color .3s,background .3s}
+.slide.active .chip:hover{border-color:#A81251;background:rgba(168,18,81,.08)}
 
 .prods{margin-top:22px;max-width:620px}
-.prod{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:12px 0;border-top:1px solid rgba(27,53,84,.28);font-size:15px;line-height:1.5;color:var(--ink);font-weight:600;text-shadow:0 1px 2px rgba(255,255,255,.5)}
-.prod b{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:2px;color:var(--mag);padding-top:2px}
+.prod{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:12px 0;border-top:1px solid rgba(27,53,84,.28);font-size:15px;line-height:1.5;color:#06111f;font-weight:600;text-shadow:0 1px 2px rgba(255,255,255,.5)}
+.prod b{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:2px;color:#A81251;padding-top:2px}
 .cards{display:flex;gap:18px;margin-top:6px}
-.card{width:22vw;min-width:220px;padding:20px;background:rgba(255,255,255,.7);border:1px solid rgba(27,53,84,.18);backdrop-filter:blur(6px);transition:border-color .3s}
-.slide.active .card{border-color:var(--mag)}
-.tag{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--slate);text-transform:uppercase}
-.card h3{font-size:19px;font-weight:500;margin:10px 0 8px;color:var(--ink)}
-.card p{font-size:14px;line-height:1.6;color:var(--ink);font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.5)}
+.card{width:22vw;min-width:220px;padding:20px;background:rgba(255,255,255,.62);border:1px solid rgba(27,53,84,.18);backdrop-filter:blur(6px);transition:border-color .3s}
+.slide.active .card:hover{border-color:#A81251}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#376593;text-transform:uppercase}
+.card h3{font-size:19px;font-weight:500;margin:10px 0 8px;color:#06111f}
+.card p{font-size:14px;line-height:1.6;color:#06111f;font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.5)}
 .steps{display:flex;gap:28px;margin-top:26px}
 .steps div{flex:1;max-width:220px;border-top:1px solid rgba(27,53,84,.3);padding-top:14px}
-.steps b{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--mag)}
-.steps h4{font-size:16px;font-weight:500;margin:6px 0;color:var(--ink)}
-.steps p{font-size:14px;line-height:1.6;color:var(--ink);font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.5)}
+.steps b{font-family:var(--mono);font-size:12px;font-weight:500;color:#A81251}
+.steps h4{font-size:16px;font-weight:500;margin:6px 0;color:#06111f}
+.steps p{font-size:14px;line-height:1.6;color:#06111f;font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.5)}
 .cta{display:flex;align-items:center;gap:28px;margin-top:26px;flex-wrap:wrap}
-.mail{font-size:22px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--mag);user-select:text}
+.mail{font-size:22px;color:#06111f;text-decoration:none;border-bottom:1px solid #A81251;user-select:text}
 
-.socials{display:flex;align-items:center;gap:12px;margin-top:24px}
-.social-icon{width:38px;height:38px;border-radius:50%;border:1px solid rgba(27,53,84,.35);display:flex;align-items:center;justify-content:center;color:var(--ink);transition:border-color .3s,background .3s,color .3s;pointer-events:auto}
-.social-icon svg{width:16px;height:16px;fill:currentColor}
-.social-icon:hover{border-color:var(--mag);background:var(--mag);color:#fff}
+/* Social links */
+.socials{display:flex;align-items:center;gap:20px;margin-top:18px;flex-wrap:wrap}
+.social-link{display:inline-flex;align-items:center;gap:7px;color:#06111f;text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;transition:color .3s,border-color .3s;border-bottom:1px solid rgba(27,53,84,.3);padding-bottom:3px}
+.social-link:hover{color:#A81251;border-color:#A81251}
+.social-link svg{width:14px;height:14px;fill:currentColor;flex-shrink:0}
 
 .slide-title .char{display:inline-block;opacity:0;transform:translateY(50px);filter:blur(12px);transition:opacity .8s cubic-bezier(.25,1,.5,1),transform .8s cubic-bezier(.25,1,.5,1),filter .8s cubic-bezier(.25,1,.5,1)}
-.slide.active .slide-title .char{opacity:1;transform:translateY(0);filter:blur(0)}
+.slide.active .slide-title .char{opacity:1;transform:none;filter:blur(0)}
 .slide.active{pointer-events:auto}
 
 .story-dashes{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;gap:8px}
 .story-dash{width:2px;height:26px;background:rgba(27,53,84,.18);border-radius:2px}
-.story-dash-fill{width:100%;height:0%;background:linear-gradient(var(--navy) 60%,var(--mag));border-radius:2px}
-.grid-horizontal-line{position:absolute;top:70px;left:0;right:0;height:1px;background:rgba(27,53,84,.16);z-index:5;pointer-events:none}
-.grid-lines{position:absolute;top:0;left:40px;right:40px;width:calc(100% - 80px);height:100vh;display:flex;justify-content:space-between;z-index:5;pointer-events:none}
+.story-dash-fill{width:100%;height:0%;background:linear-gradient(#1B3554 60%,#A81251);border-radius:2px}
+.grid-horizontal-line{position:fixed;top:70px;left:0;right:0;height:1px;background:rgba(27,53,84,.16);z-index:5;pointer-events:none}
+.grid-lines{position:fixed;top:0;left:40px;right:40px;width:calc(100% - 80px);height:100vh;display:flex;justify-content:space-between;z-index:5;pointer-events:none}
 .grid-line{position:relative;width:1px;height:100%;background:rgba(27,53,84,.13)}
 .grid-line:nth-child(3){margin-top:70px;height:calc(100vh - 70px)}
 .grid-dot{position:absolute;left:50%;transform:translate(-50%,-50%);width:6px;height:6px;border-radius:50%;background:rgba(27,53,84,.45);box-shadow:0 0 5px rgba(91,134,182,.4)}
-.grid-line:nth-child(5) .grid-dot.top{background:var(--mag);box-shadow:0 0 8px var(--mag)}
+.grid-line:nth-child(5) .grid-dot.top{background:#A81251;box-shadow:0 0 8px #A81251}
 
 @media(max-width:900px){
-.cinematic-container{padding:0 24px 30px}
-.header-nav{display:none}
-.cursor-inner,.cursor-outer{display:none}
-body,*{cursor:auto!important}
-#slide-1 .slide-title,#slide-1 .eyebrow,#slide-1 .col-1{margin-left:24px}
-#slide-1 .col-1,#slide-1 .col-2{width:70vw}
-#slide-1 .col-2{position:relative;left:0;margin:14px 0 0 24px}
-#slide-1 .desc-row{display:block}
-#slide-2,#slide-3,#slide-4,#slide-5,#slide-6,#slide-7{left:24px;width:86vw}
-#slide-2 .slide-title,#slide-2 .slide-desc{margin-left:0;width:auto}
-.slide-title{font-size:13vw}
-.cards,.steps{flex-direction:column;gap:10px}
-.card{width:86vw;padding:12px 16px}
-.card p,.steps p{display:none}
-.prod{grid-template-columns:80px 1fr;font-size:13px}
-/* Force the same readable dark ink color on mobile that desktop already uses,
-   regardless of any inherited/overridden value, so text never renders washed-out or white. */
-.slide-title,.slide-desc,.rev,.eyebrow,.prod,.card h3,.card p,.steps h4,.steps p,.tag,.brand,.mail{color:var(--ink)!important;text-shadow:none!important}
-.eyebrow,.tag{color:var(--slate)!important}
-.prod b{color:var(--mag)!important}
-.socials{margin-top:18px}
+  .cinematic-container{padding:0 24px 30px}
+  .header-nav{display:none}
+  .header-actions .contact-btn{padding:8px 16px;font-size:9px}
+  #slide-1 .slide-title,#slide-1 .eyebrow,#slide-1 .col-1{margin-left:24px}
+  #slide-1 .col-1,#slide-1 .col-2{width:82vw}
+  #slide-1 .col-2{position:static;margin:14px 0 0 24px}
+  #slide-1 .desc-row{display:block}
+  #slide-2,#slide-3,#slide-4,#slide-5,#slide-6,#slide-7{left:24px;width:86vw}
+  #slide-2 .slide-title,#slide-2 .slide-desc{margin-left:0;width:auto}
+  #slide-3{left:24px;width:86vw}
+  #slide-3 .slide-title{white-space:normal}
+  .slide-title{font-size:clamp(32px,11vw,60px);letter-spacing:-1px}
+  .slide-desc,.rev{font-size:14px}
+  .cards,.steps{flex-direction:column;gap:10px}
+  .card{width:86vw;padding:12px 16px}
+  .card p{display:block;font-size:13px}
+  .steps p{display:block;font-size:13px}
+  .prod{grid-template-columns:80px 1fr;font-size:13px}
+  .mail{font-size:16px}
+  .cta{flex-direction:column;align-items:flex-start;gap:14px;margin-top:18px}
+  .socials{gap:14px;margin-top:14px}
+  .social-link{font-size:9px}
+}
+@media(max-width:480px){
+  .slide-title{font-size:clamp(28px,9vw,42px)}
+  .slide-desc,.rev{font-size:13px}
+  .card{min-width:0;width:88vw}
+  .chips{gap:6px}
+  .chip{font-size:9px;padding:5px 10px}
 }
 </style>
 </head>
@@ -125,106 +141,107 @@ body,*{cursor:auto!important}
 <div class="cursor-outer"></div>
 
 <div class="cinematic-container">
-<div class="main-header">
-<div class="brand">Aetherquorix</div>
-<nav class="header-nav" aria-label="Main navigation">
-<a href="#intelligence" class="nav-link" data-slide="0">Intelligence</a><span class="nav-dot"></span>
-<a href="#systems" class="nav-link" data-slide="1">Systems</a><span class="nav-dot"></span>
-<a href="#experiences" class="nav-link" data-slide="2">Experiences</a><span class="nav-dot"></span>
-<a href="#products" class="nav-link" data-slide="3">Products</a><span class="nav-dot"></span>
-<a href="#work" class="nav-link" data-slide="4">Work</a><span class="nav-dot"></span>
-<a href="#about" class="nav-link" data-slide="5">About</a><span class="nav-dot"></span>
-<a href="#contact" class="nav-link" data-slide="6">Contact</a>
-</nav>
-<div class="header-actions"><a href="#" class="contact-btn">Start a Project <span class="btn-circle"></span></a></div>
-</div>
+  <div class="main-header">
+    <div class="brand">Aetherquorix</div>
+    <nav class="header-nav" aria-label="Main navigation">
+      <a href="#intelligence" class="nav-link" data-slide="0">Intelligence</a><span class="nav-dot"></span>
+      <a href="#systems" class="nav-link" data-slide="1">Systems</a><span class="nav-dot"></span>
+      <a href="#experiences" class="nav-link" data-slide="2">Experiences</a><span class="nav-dot"></span>
+      <a href="#products" class="nav-link" data-slide="3">Products</a><span class="nav-dot"></span>
+      <a href="#work" class="nav-link" data-slide="4">Work</a><span class="nav-dot"></span>
+      <a href="#about" class="nav-link" data-slide="5">About</a><span class="nav-dot"></span>
+      <a href="#contact" class="nav-link" data-slide="6">Contact</a>
+    </nav>
+    <div class="header-actions"><a href="#" class="contact-btn">Start a Project <span class="btn-circle"></span></a></div>
+  </div>
 
-<div class="slide" id="slide-1" data-section="intelligence">
-<p class="eyebrow rev">AI Systems. Intelligent Automation. Digital Experiences.</p>
-<h2 class="slide-title">Raw <br>Intelligence</h2>
-<div class="desc-row">
-<p class="slide-desc col-1">We Build Intelligent Systems, Digital Products &amp; Immersive Experiences.</p>
-<p class="slide-desc col-2">Every system begins with information. Data, ideas and complexity are the raw material.</p>
-</div>
-</div>
+  <div class="slide" id="slide-1" data-section="intelligence">
+    <p class="eyebrow rev">AI Systems. Intelligent Automation. Digital Experiences.</p>
+    <h2 class="slide-title">Raw <br>Intelligence</h2>
+    <div class="desc-row">
+      <p class="slide-desc col-1">We Build Intelligent Systems, Digital Products &amp; Immersive Experiences.</p>
+      <p class="slide-desc col-2">Every system begins with information. Data, ideas and complexity are the raw material.</p>
+    </div>
+  </div>
 
-<div class="slide" id="slide-2" data-section="systems">
-<h2 class="slide-title">Intelligent <br>Systems</h2>
-<p class="slide-desc">We transform complexity through AI, automation, software and intelligent workflows.</p>
-</div>
+  <div class="slide" id="slide-2" data-section="systems">
+    <h2 class="slide-title">Intelligent <br>Systems</h2>
+    <p class="slide-desc">We transform complexity through AI, automation, software and intelligent workflows.</p>
+  </div>
 
-<div class="slide" id="slide-3" data-section="experiences">
-<h2 class="slide-title">Engineered <br>Experiences</h2>
-<p class="slide-desc">From models and automation to interfaces, products, design and immersive 3D environments.</p>
-<div class="chips rev"><span class="chip">Generative AI</span><span class="chip">AI Automation</span><span class="chip">AI Agents</span><span class="chip">Software</span><span class="chip">Digital Products</span><span class="chip">Graphic Design</span><span class="chip">3D Visualization</span></div>
-</div>
+  <div class="slide" id="slide-3" data-section="experiences">
+    <h2 class="slide-title">Engineered <br>Experiences</h2>
+    <p class="slide-desc">From models and automation to interfaces, products, design and immersive 3D environments.</p>
+    <div class="chips rev"><span class="chip">Generative AI</span><span class="chip">AI Automation</span><span class="chip">AI Agents</span><span class="chip">Software</span><span class="chip">Digital Products</span><span class="chip">Graphic Design</span><span class="chip">3D Visualization</span></div>
+  </div>
 
-<div class="slide" id="slide-4" data-section="products">
-<h2 class="slide-title">Built for <br>What's Next</h2>
-<p class="slide-desc">Technology becomes powerful when intelligence turns into something people can actually use. Our AI products:</p>
-<div class="prods rev">
-<div class="prod"><b>DOC AI</b><span>Reads your documents and answers questions about them in seconds.</span></div>
-<div class="prod"><b>TRADE AI</b><span>Turns market data into clear, risk-aware insights for faster decisions.</span></div>
-<div class="prod"><b>HIRE AI</b><span>Screens and ranks candidates so hiring teams find the right people sooner.</span></div>
-</div>
-</div>
+  <div class="slide" id="slide-4" data-section="products">
+    <h2 class="slide-title">Built for <br>What's Next</h2>
+    <p class="slide-desc">Technology becomes powerful when intelligence turns into something people can actually use. Our AI products:</p>
+    <div class="prods rev">
+      <div class="prod"><b>DOC AI</b><span>Reads your documents and answers questions about them in seconds.</span></div>
+      <div class="prod"><b>TRADE AI</b><span>Turns market data into clear, risk-aware insights for faster decisions.</span></div>
+      <div class="prod"><b>HIRE AI</b><span>Screens and ranks candidates so hiring teams find the right people sooner.</span></div>
+    </div>
+  </div>
 
-<div class="slide" id="slide-5" data-section="work">
-<h2 class="slide-title">Selected Work</h2>
-<div class="cards rev">
-<div class="card"><span class="tag">AI · Documents</span><h3>Document intelligence platform</h3><p>Reads contracts and reports, then answers questions with the source shown.</p></div>
-<div class="card"><span class="tag">Automation · Operations</span><h3>Workflow automation suite</h3><p>Connects your tools so approvals, reports and hand-offs run on their own.</p></div>
-<div class="card"><span class="tag">3D · Product</span><h3>Interactive 3D showcase</h3><p>Lets customers rotate, configure and explore a product right in the browser.</p></div>
-</div>
-</div>
+  <div class="slide" id="slide-5" data-section="work">
+    <h2 class="slide-title">Selected Work</h2>
+    <div class="cards rev">
+      <div class="card"><span class="tag">AI · Documents</span><h3>Document intelligence platform</h3><p>Reads contracts and reports, then answers questions with the source shown.</p></div>
+      <div class="card"><span class="tag">Automation · Operations</span><h3>Workflow automation suite</h3><p>Connects your tools so approvals, reports and hand-offs run on their own.</p></div>
+      <div class="card"><span class="tag">3D · Product</span><h3>Interactive 3D showcase</h3><p>Lets customers rotate, configure and explore a product right in the browser.</p></div>
+    </div>
+  </div>
 
-<div class="slide" id="slide-6" data-section="about">
-<h2 class="slide-title">About Us</h2>
-<p class="slide-desc">Aetherquorix is an AI and technology studio. We design and build intelligent systems, digital products and immersive experiences, from AI agents and automation to software, graphic design and 3D.</p>
-<div class="steps rev">
-<div><b>A</b><h4>Understand</h4><p>We start with your data, goals and constraints.</p></div>
-<div><b>Q</b><h4>Build the intelligence</h4><p>We design the AI, automation and software that does the work.</p></div>
-<div><b>X</b><h4>Deliver</h4><p>We ship the finished product, interface and experience.</p></div>
-</div>
-</div>
+  <div class="slide" id="slide-6" data-section="about">
+    <h2 class="slide-title">About Us</h2>
+    <p class="slide-desc">Aetherquorix is an AI and technology studio. We design and build intelligent systems, digital products and immersive experiences, from AI agents and automation to software, graphic design and 3D.</p>
+    <div class="steps rev">
+      <div><b>A</b><h4>Understand</h4><p>We start with your data, goals and constraints.</p></div>
+      <div><b>Q</b><h4>Build the intelligence</h4><p>We design the AI, automation and software that does the work.</p></div>
+      <div><b>X</b><h4>Deliver</h4><p>We ship the finished product, interface and experience.</p></div>
+    </div>
+  </div>
 
-<div class="slide" id="slide-7" data-section="contact">
-<h2 class="slide-title">Let's Talk</h2>
-<p class="slide-desc">Tell us what you want to build, whether an AI system, automation, product, design or 3D experience, and we'll help you shape it.</p>
-<div class="cta rev">
-<a class="mail" href="mailto:hello@aetherquorix.com">hello@aetherquorix.com</a>
-<a class="cta-btn" href="mailto:hello@aetherquorix.com?subject=New%20project">Start a Project <span class="btn-circle"></span></a>
-</div>
-<div class="socials rev">
-<a class="social-icon" href="https://www.instagram.com/aetherquorix/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 2 .25 2.5.42.6.24 1 .52 1.5 1s.8.9 1 1.5c.17.5.36 1.3.42 2.5.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 2-.42 2.5-.24.6-.52 1-1 1.5s-.9.8-1.5 1c-.5.17-1.3.36-2.5.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2-.06-2-.25-2.5-.42-.6-.24-1-.52-1.5-1s-.8-.9-1-1.5c-.17-.5-.36-1.3-.42-2.5C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-2 .42-2.5.24-.6.52-1 1-1.5s.9-.8 1.5-1c.5-.17 1.3-.36 2.5-.42C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.15 0-3.52 0-4.77.07-.97.05-1.5.2-1.85.34-.46.18-.79.4-1.14.75s-.57.68-.75 1.14c-.14.35-.3.88-.34 1.85C3.1 8.48 3.1 8.85 3.1 12s0 3.52.07 4.77c.05.97.2 1.5.34 1.85.18.46.4.79.75 1.14s.68.57 1.14.75c.35.14.88.3 1.85.34 1.25.07 1.62.07 4.77.07s3.52 0 4.77-.07c.97-.05 1.5-.2 1.85-.34.46-.18.79-.4 1.14-.75s.57-.68.75-1.14c.14-.35.3-.88.34-1.85.07-1.25.07-1.62.07-4.77s0-3.52-.07-4.77c-.05-.97-.2-1.5-.34-1.85a3.02 3.02 0 0 0-.75-1.14 3.02 3.02 0 0 0-1.14-.75c-.35-.14-.88-.3-1.85-.34C15.52 4 15.15 4 12 4zm0 3.4a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2zm0 1.8a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6zm4.8-2a1.08 1.08 0 1 1 0 2.16 1.08 1.08 0 0 1 0-2.16z"/></svg>
-</a>
-<a class="social-icon" href="https://www.facebook.com/profile.php?id=61594644663028" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.7h2.6l.4-3h-3v-1.9c0-.87.24-1.46 1.5-1.46h1.6V4.3c-.28-.04-1.23-.12-2.34-.12-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z"/></svg>
-</a>
-</div>
-</div>
+  <div class="slide" id="slide-7" data-section="contact">
+    <h2 class="slide-title">Let's Talk</h2>
+    <p class="slide-desc">Tell us what you want to build, whether an AI system, automation, product, design or 3D experience, and we'll help you shape it.</p>
+    <div class="cta rev">
+      <a class="mail" href="mailto:hello@aetherquorix.com">etherquorix@gmail.com</a>
+      <a class="cta-btn" href="mailto:hello@aetherquorix.com?subject=New%20project">Start a Project <span class="btn-circle"></span></a>
+    </div>
+    <div class="socials rev">
+      <a href="https://www.instagram.com/aetherquorix/" target="_blank" rel="noopener noreferrer" class="social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Instagram
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61594644663028" target="_blank" rel="noopener noreferrer" class="social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook
+      </a>
+    </div>
+  </div>
 </div>
 
 <div class="grid-horizontal-line"></div>
 <div class="grid-lines">
-<div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
-<div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
-<div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
-<div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
-<div class="grid-line story-progress-container">
-<div class="grid-dot top"></div><div class="grid-dot bottom"></div>
-<div class="story-dashes" aria-hidden="true">
-<div class="story-dash"><div class="story-dash-fill" id="dash-fill-1"></div></div>
-<div class="story-dash"><div class="story-dash-fill" id="dash-fill-2"></div></div>
-<div class="story-dash"><div class="story-dash-fill" id="dash-fill-3"></div></div>
-<div class="story-dash"><div class="story-dash-fill" id="dash-fill-4"></div></div>
-<div class="story-dash"><div class="story-dash-fill" id="dash-fill-5"></div></div>
-<div class="story-dash"><div class="story-dash-fill" id="dash-fill-6"></div></div>
-<div class="story-dash"><div class="story-dash-fill" id="dash-fill-7"></div></div>
-</div>
-</div>
-</div>
+  <div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
+  <div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
+  <div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
+  <div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
+  <div class="grid-line story-progress-container">
+    <div class="grid-dot top"></div><div class="grid-dot bottom"></div>
+    <div class="story-dashes" aria-hidden="true">
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-1"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-2"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-3"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-4"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-5"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-6"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-7"></div></div>
+    </div>
+  </div>
 </div>
 
 <canvas id="webgl"></canvas>
@@ -232,16 +249,21 @@ body,*{cursor:auto!important}
 <script type="importmap">
 {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
 </script>
-
 <script type="module">
 import * as THREE from 'three';
+
 const canvas = document.querySelector('#webgl');
 const clock = new THREE.Clock();
 const R = Math.random, clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 let currentScroll = 0, mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
 let cursorX = innerWidth / 2, cursorY = innerHeight / 2, outerX = cursorX, outerY = cursorY;
 const sizes = { width: innerWidth, height: innerHeight };
-const shaderUniforms = { uTime: { value: 0 }, uResolution: { value: new THREE.Vector2(innerWidth, innerHeight) }, uMouse: { value: new THREE.Vector2() }, uScroll: { value: 0 } };
+const shaderUniforms = {
+  uTime: { value: 0 }, uResolution: { value: new THREE.Vector2(innerWidth, innerHeight) },
+  uMouse: { value: new THREE.Vector2() }, uScroll: { value: 0 }
+};
+
+/* ---------- scene / camera / renderer ---------- */
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#f6f9fd');
 scene.fog = new THREE.FogExp2('#f6f9fd', 0.01);
@@ -256,11 +278,18 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 2.0;
+
+/* ---------- lighting ---------- */
 scene.add(new THREE.AmbientLight('#80AAD3', 0.18));
-const key = new THREE.SpotLight('#C6E6FD', 18); key.position.set(4, 6, 3); key.angle = Math.PI / 4; key.penumbra = 0.9; key.castShadow = true; key.shadow.mapSize.set(2048, 2048); key.shadow.camera.near = 1; key.shadow.camera.far = 15; key.shadow.bias = -0.001; scene.add(key);
+const key = new THREE.SpotLight('#C6E6FD', 18);
+key.position.set(4, 6, 3); key.angle = Math.PI / 4; key.penumbra = 0.9; key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048); key.shadow.camera.near = 1; key.shadow.camera.far = 15; key.shadow.bias = -0.001;
+scene.add(key);
 const rim = new THREE.DirectionalLight('#5B86B6', 10); rim.position.set(-5, 3, -4); scene.add(rim);
 const mag = new THREE.PointLight('#A81251', 28, 12); mag.position.set(-3, -1, 3); scene.add(mag);
 const fill = new THREE.DirectionalLight('#1B3554', 1.2); fill.position.set(-2, -4, 2); scene.add(fill);
+
+/* ---------- A → Q → X sculpture ---------- */
 const N = 2600, NODES = 120;
 const A = new Float32Array(N * 3), Q = new Float32Array(N * 3), X = new Float32Array(N * 3);
 const pos = new Float32Array(N * 3), col = new Float32Array(N * 3), delay = new Float32Array(N);
@@ -279,53 +308,125 @@ for (let i = 0; i < N; i++) {
   Q.set([qx, qy, (R() - 0.5) * 0.24], i * 3);
   const d = R() < 0.5 ? 1 : -1, k = R(), w = (R() - 0.5) * 0.12;
   X.set([lerpPt(-1, 1, k) + w * 0.5, d * lerpPt(-1.2, 1.2, k) + w, (R() - 0.5) * 0.14], i * 3);
-  const c = cols[R() < 0.9 ? Math.floor(R() * 3) : 3]; col.set(c, i * 3); delay[i] = R() * 0.45;
+  const c = cols[R() < 0.9 ? Math.floor(R() * 3) : 3]; col.set(c, i * 3);
+  delay[i] = R() * 0.45;
 }
 pos.set(A);
-const sparkTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 16; const x = c.getContext('2d'), g = x.createRadialGradient(8, 8, 0, 8, 8, 8); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.25, 'rgba(255,255,255,.85)'); g.addColorStop(0.6, 'rgba(255,255,255,.3)'); g.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = g; x.fillRect(0, 0, 16, 16); return new THREE.CanvasTexture(c); })();
-const sculpt = new THREE.Group(); scene.add(sculpt);
-const dataGeo = new THREE.BufferGeometry(); dataGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); dataGeo.setAttribute('color', new THREE.BufferAttribute(col, 3));
-sculpt.add(new THREE.Points(dataGeo, new THREE.PointsMaterial({ size: 0.060, vertexColors: true, transparent: true, opacity: 1.0, blending: THREE.NormalBlending, depthWrite: false, map: sparkTex })));
+
+const sparkTex = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 16;
+  const x = c.getContext('2d'), g = x.createRadialGradient(8, 8, 0, 8, 8, 8);
+  g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.25, 'rgba(255,255,255,.85)');
+  g.addColorStop(0.6, 'rgba(255,255,255,.3)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+  x.fillStyle = g; x.fillRect(0, 0, 16, 16); return new THREE.CanvasTexture(c);
+})();
+
+const sculpt = new THREE.Group();
+scene.add(sculpt);
+const dataGeo = new THREE.BufferGeometry();
+dataGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+dataGeo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+sculpt.add(new THREE.Points(dataGeo, new THREE.PointsMaterial({
+  size: 0.060, vertexColors: true, transparent: true, opacity: 1.0,
+  blending: THREE.NormalBlending, depthWrite: false, map: sparkTex
+})));
+
 const pairs = [];
-for (let i = 0; i < NODES; i++) { const d = []; for (let j = 0; j < NODES; j++) if (j !== i) { const dx = Q[i * 3] - Q[j * 3], dy = Q[i * 3 + 1] - Q[j * 3 + 1], dz = Q[i * 3 + 2] - Q[j * 3 + 2]; d.push([dx * dx + dy * dy + dz * dz, j]); } d.sort((a, b) => a[0] - b[0]); pairs.push([i, d[0][1]], [i, d[1][1]]); }
+for (let i = 0; i < NODES; i++) {
+  const d = [];
+  for (let j = 0; j < NODES; j++) if (j !== i) {
+    const dx = Q[i*3]-Q[j*3], dy = Q[i*3+1]-Q[j*3+1], dz = Q[i*3+2]-Q[j*3+2];
+    d.push([dx*dx+dy*dy+dz*dz, j]);
+  }
+  d.sort((a, b) => a[0] - b[0]); pairs.push([i, d[0][1]], [i, d[1][1]]);
+}
 const lineArr = new Float32Array(pairs.length * 6);
-const lineGeo = new THREE.BufferGeometry(); lineGeo.setAttribute('position', new THREE.BufferAttribute(lineArr, 3));
+const lineGeo = new THREE.BufferGeometry();
+lineGeo.setAttribute('position', new THREE.BufferAttribute(lineArr, 3));
 const lineMat = new THREE.LineBasicMaterial({ color: '#376593', transparent: true, opacity: 0, blending: THREE.NormalBlending, depthWrite: false });
 sculpt.add(new THREE.LineSegments(lineGeo, lineMat));
+
 const ringMat = new THREE.MeshBasicMaterial({ color: '#A81251', transparent: true, opacity: 0, blending: THREE.NormalBlending });
-const ring = new THREE.Mesh(new THREE.TorusGeometry(1.15, 0.012, 8, 128), ringMat); ring.position.y = 0.1; sculpt.add(ring);
+const ring = new THREE.Mesh(new THREE.TorusGeometry(1.15, 0.012, 8, 128), ringMat);
+ring.position.y = 0.1; sculpt.add(ring);
+
 const xGroup = new THREE.Group();
-const xCount = 1800; const xPos = new Float32Array(xCount * 3); const xCol = new Float32Array(xCount * 3);
-for (let i = 0; i < xCount; i++) { const branch = Math.random() < 0.5 ? 1 : -1; const t = Math.random(); const spread = (Math.random() - 0.5) * (0.045 + Math.sin(t * Math.PI) * 0.13); const x = (t * 2 - 1); const y = branch * (t * 2 - 1); const z = (Math.random() - 0.5) * (0.11 + Math.sin(t * Math.PI) * 0.07); xPos[i * 3] = x + spread; xPos[i * 3 + 1] = y + spread * branch; xPos[i * 3 + 2] = z; const edge = Math.random(); const c = edge > 0.92 ? [0.66, 0.07, 0.32] : (Math.random() > 0.45 ? [0.035, 0.09, 0.16] : [0.07, 0.16, 0.27]); xCol.set(c, i * 3); }
-const xGeo = new THREE.BufferGeometry(); xGeo.setAttribute('position', new THREE.BufferAttribute(xPos, 3)); xGeo.setAttribute('color', new THREE.BufferAttribute(xCol, 3));
-const xPoints = new THREE.Points(xGeo, new THREE.PointsMaterial({ size: 0.058, vertexColors: true, transparent: true, opacity: 1.0, depthWrite: false, blending: THREE.NormalBlending, map: sparkTex }));
+const xCount = 1800;
+const xPos = new Float32Array(xCount * 3);
+const xCol = new Float32Array(xCount * 3);
+for (let i = 0; i < xCount; i++) {
+  const branch = Math.random() < 0.5 ? 1 : -1;
+  const t = Math.random();
+  const spread = (Math.random() - 0.5) * (0.045 + Math.sin(t * Math.PI) * 0.13);
+  xPos[i*3]   = (t * 2 - 1) + spread;
+  xPos[i*3+1] = branch * (t * 2 - 1) + spread * branch;
+  xPos[i*3+2] = (Math.random() - 0.5) * (0.11 + Math.sin(t * Math.PI) * 0.07);
+  const edge = Math.random();
+  const c = edge > 0.92 ? [0.66,0.07,0.32] : (Math.random() > 0.45 ? [0.035,0.09,0.16] : [0.07,0.16,0.27]);
+  xCol.set(c, i * 3);
+}
+const xGeo = new THREE.BufferGeometry();
+xGeo.setAttribute('position', new THREE.BufferAttribute(xPos, 3));
+xGeo.setAttribute('color', new THREE.BufferAttribute(xCol, 3));
+const xPoints = new THREE.Points(xGeo, new THREE.PointsMaterial({
+  size: 0.058, vertexColors: true, transparent: true, opacity: 1.0, depthWrite: false,
+  blending: THREE.NormalBlending, map: sparkTex
+}));
 xGroup.add(xPoints);
 const xLineMat = new THREE.LineBasicMaterial({ color: '#1B3554', transparent: true, opacity: 0.18, depthWrite: false });
 const xLineGeo = new THREE.BufferGeometry();
-xLineGeo.setAttribute('position', new THREE.Float32BufferAttribute([-1.0,-1.2,0.02, 1.0,1.2,0.02, -1.0,1.2,0.02, 1.0,-1.2,0.02], 3));
+xLineGeo.setAttribute('position', new THREE.Float32BufferAttribute([-1.0,-1.2,0.02,1.0,1.2,0.02,-1.0,1.2,0.02,1.0,-1.2,0.02], 3));
 xGroup.add(new THREE.LineSegments(xLineGeo, xLineMat));
-const xHalo = new THREE.Points(xGeo.clone(), new THREE.PointsMaterial({ size: 0.085, color: '#5B86B6', transparent: true, opacity: 0.08, depthWrite: false, blending: THREE.AdditiveBlending, map: sparkTex }));
+const xHalo = new THREE.Points(xGeo.clone(), new THREE.PointsMaterial({
+  size: 0.085, color: '#5B86B6', transparent: true, opacity: 0.08,
+  depthWrite: false, blending: THREE.AdditiveBlending, map: sparkTex
+}));
 xGroup.add(xHalo);
-xGroup.visible = false; xGroup.scale.setScalar(0.001); sculpt.add(xGroup);
+xGroup.visible = false;
+xGroup.scale.setScalar(0.001);
+sculpt.add(xGroup);
+
 function morph(m, time) {
   const seg = m < 1 ? 0 : 1, f = m - seg, from = seg ? Q : A, to = seg ? X : Q;
-  for (let i = 0; i < N; i++) { let t = clamp((f - delay[i]) / 0.55, 0, 1); t = t * t * (3 - 2 * t); const amp = 0.015 + Math.sin(t * Math.PI) * 0.3 + (m < 0.3 ? (0.3 - m) * 0.2 : 0); for (let k = 0; k < 3; k++) { const j = i * 3 + k; pos[j] = from[j] + (to[j] - from[j]) * t + Math.sin(time * 1.3 + i * 0.7 + k * 2.1) * amp; } }
+  for (let i = 0; i < N; i++) {
+    let t = clamp((f - delay[i]) / 0.55, 0, 1); t = t * t * (3 - 2 * t);
+    const amp = 0.015 + Math.sin(t * Math.PI) * 0.3 + (m < 0.3 ? (0.3 - m) * 0.2 : 0);
+    for (let k = 0; k < 3; k++) {
+      const j = i * 3 + k;
+      pos[j] = from[j] + (to[j] - from[j]) * t + Math.sin(time * 1.3 + i * 0.7 + k * 2.1) * amp;
+    }
+  }
   dataGeo.attributes.position.needsUpdate = true;
-  for (let p = 0; p < pairs.length; p++) for (let e = 0; e < 2; e++) for (let k = 0; k < 3; k++) lineArr[p * 6 + e * 3 + k] = pos[pairs[p][e] * 3 + k];
+  for (let p = 0; p < pairs.length; p++) for (let e = 0; e < 2; e++) for (let k = 0; k < 3; k++)
+    lineArr[p*6+e*3+k] = pos[pairs[p][e]*3+k];
   lineGeo.attributes.position.needsUpdate = true;
-  const qw = Math.max(0, 1 - Math.abs(m - 1) * 1.4); lineMat.opacity = 0.55 * qw; ringMat.opacity = 0.75 * qw;
+  const qw = Math.max(0, 1 - Math.abs(m - 1) * 1.4);
+  lineMat.opacity = 0.55 * qw; ringMat.opacity = 0.75 * qw;
   const xw = clamp((m - 1.3) / 0.6, 0, 1), s = xw * xw * (3 - 2 * xw);
-  xGroup.visible = s > 0.01; xGroup.scale.setScalar(Math.max(s, 0.001)); xGroup.rotation.z = Math.sin(time * 0.35) * 0.008 * s; xGroup.position.z = Math.sin(time * 0.5) * 0.018 * s;
+  xGroup.visible = s > 0.01;
+  xGroup.scale.setScalar(Math.max(s, 0.001));
+  xGroup.rotation.z = Math.sin(time * 0.35) * 0.008 * s;
+  xGroup.position.z = Math.sin(time * 0.5) * 0.018 * s;
 }
+
+/* ---------- ambient particles ---------- */
 const sparkCount = 450, sparkData = [];
 const sparkGeo = new THREE.BufferGeometry();
 const sp = new Float32Array(sparkCount * 3), sc = new Float32Array(sparkCount * 3);
-for (let i = 0; i < sparkCount; i++) { sp.set([(R() - 0.5) * 6.5, (R() - 0.5) * 5 - 0.5, (R() - 0.5) * 6.5], i * 3); const c = R() < 0.1 ? cols[3] : R() < 0.5 ? cols[0] : cols[1]; sc.set(c, i * 3); sparkData.push({ sx: (R() - 0.5) * 0.4, sy: 0.15 + R() * 0.3, sz: (R() - 0.5) * 0.4, sws: 0.5 + R() * 1.5, swr: 0.05 + R() * 0.15, ph: R() * 6.2832 }); }
-sparkGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3)); sparkGeo.setAttribute('color', new THREE.BufferAttribute(sc, 3));
-const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ size: 0.026, vertexColors: true, transparent: true, opacity: 0.62, blending: THREE.NormalBlending, depthWrite: false, map: sparkTex }));
+for (let i = 0; i < sparkCount; i++) {
+  sp.set([(R()-0.5)*6.5,(R()-0.5)*5-0.5,(R()-0.5)*6.5], i*3);
+  const c = R()<0.1?cols[3]:R()<0.5?cols[0]:cols[1]; sc.set(c, i*3);
+  sparkData.push({ sx:(R()-0.5)*0.4, sy:0.15+R()*0.3, sz:(R()-0.5)*0.4, sws:0.5+R()*1.5, swr:0.05+R()*0.15, ph:R()*6.2832 });
+}
+sparkGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+sparkGeo.setAttribute('color', new THREE.BufferAttribute(sc, 3));
+const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ size:0.026, vertexColors:true, transparent:true, opacity:0.62, blending:THREE.NormalBlending, depthWrite:false, map:sparkTex }));
 scene.add(sparks);
+
+/* ---------- background shader ---------- */
 function createBackgroundShader() {
-  const mat = new THREE.ShaderMaterial({ uniforms: shaderUniforms, depthWrite: false, depthTest: false,
+  const mat = new THREE.ShaderMaterial({
+    uniforms: shaderUniforms, depthWrite: false, depthTest: false,
     vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
     fragmentShader: `
       varying vec2 vUv; uniform float uTime; uniform vec2 uResolution; uniform vec2 uMouse; uniform float uScroll;
@@ -341,6 +442,7 @@ function createBackgroundShader() {
         float w2=cos(dot(w,d2)*3.2-time*1.4+w1*0.4);
         float w3=sin(dot(w,d3)*4.0+time*1.8+w2*0.5);
         float f=w1*0.50+w2*0.35+w3*0.15;
+        float crest=pow(max(0.0,1.0-abs(f-0.1)),2.5)*0.5+pow(max(0.0,1.0-abs(f-0.15)),8.0)*0.9;
         float t=smoothstep(0.0,1.0,uScroll);
         vec3 paper=vec3(0.965,0.975,0.992);
         vec3 wash=mix(vec3(0.82,0.90,0.97),vec3(0.80,0.86,0.96),t);
@@ -353,48 +455,83 @@ function createBackgroundShader() {
         color=mix(color,vec3(0.66,0.07,0.32),clamp(mg*(0.6+0.4*t),0.0,1.0)*0.85);
         color*=1.0-dot(uv,uv)*0.05;
         gl_FragColor=vec4(color,1.0);
-      }` });
+      }`
+  });
   const mesh = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), mat);
   mesh.position.set(0, 0, -8); mesh.renderOrder = -10; camera.add(mesh);
 }
+
+/* ---------- UI helpers ---------- */
 function splitTitlesIntoChars() {
   document.querySelectorAll('.slide-title').forEach(title => {
     let html = '', n = 0;
     title.innerHTML.split(/(<br\s*\/?>)/i).forEach(part => {
       if (part.toLowerCase().startsWith('<br')) { html += part; return; }
-      for (const ch of part) { if (ch === ' ') html += ' '; else html += `<span class="char" style="transition-delay:${n++ * 0.035}s">${ch}</span>`; }
+      for (const ch of part) {
+        if (ch === ' ') html += ' ';
+        else html += `<span class="char" style="transition-delay:${n++ * 0.035}s">${ch}</span>`;
+      }
     });
     title.innerHTML = html;
   });
 }
 function updateGridDots(scroll) {
   document.querySelectorAll('.grid-dot').forEach((dot, i) => {
-    const startY = (i * 17) % 80 + 10; let speed = 90 + (i * 55) % 180; if (i % 2 === 0) speed = -speed;
+    const startY = (i * 17) % 80 + 10; let speed = 90 + (i * 55) % 180;
+    if (i % 2 === 0) speed = -speed;
     dot.style.top = `${(((startY + scroll * speed) % 100) + 100) % 100}%`;
   });
 }
 function updateSlides(scroll) {
   const n = 7;
-  for (let i = 1; i <= n; i++) { const fill = document.getElementById(`dash-fill-${i}`); if (fill) fill.style.height = `${clamp((scroll - (i - 1) / n) * n, 0, 1) * 100}%`; }
-  const ranges = [[-0.1, 0.10], [0.15, 0.27], [0.29, 0.41], [0.43, 0.55], [0.57, 0.70], [0.72, 0.85], [0.87, 1.05]];
-  ranges.forEach(([a, b], i) => document.getElementById(`slide-${i + 1}`).classList.toggle('active', scroll >= a && scroll <= b));
-}
-function setupNavigation() {
-  const targets = [0.04, 0.21, 0.35, 0.49, 0.635, 0.785, 0.94];
-  document.querySelectorAll('.nav-link').forEach((link, i) => link.addEventListener('click', e => { e.preventDefault(); scrollTo({ top: (document.documentElement.scrollHeight - innerHeight) * targets[i], behavior: 'smooth' }); }));
-  document.querySelector('.contact-btn').addEventListener('click', e => { e.preventDefault(); scrollTo({ top: (document.documentElement.scrollHeight - innerHeight) * 0.94, behavior: 'smooth' }); });
-  document.querySelectorAll('a,.chip,.card').forEach(el => { el.addEventListener('mouseenter', () => document.body.classList.add('hot')); el.addEventListener('mouseleave', () => document.body.classList.remove('hot')); });
+  for (let i = 1; i <= n; i++) {
+    const fill = document.getElementById(`dash-fill-${i}`);
+    if (fill) fill.style.height = `${clamp((scroll - (i-1)/n) * n, 0, 1) * 100}%`;
+  }
+  const ranges = [[-0.1,0.10],[0.15,0.27],[0.29,0.41],[0.43,0.55],[0.57,0.70],[0.72,0.85],[0.87,1.05]];
+  ranges.forEach(([a, b], i) => document.getElementById(`slide-${i+1}`).classList.toggle('active', scroll >= a && scroll <= b));
 }
 function updateActiveNav(scroll) {
   const ranges = [[-0.1,0.10],[0.15,0.27],[0.29,0.41],[0.43,0.55],[0.57,0.70],[0.72,0.85],[0.87,1.05]];
-  document.querySelectorAll('.nav-link').forEach((link, i) => { link.classList.toggle('active', scroll >= ranges[i][0] && scroll <= ranges[i][1]); });
+  document.querySelectorAll('.nav-link').forEach((link, i) => {
+    link.classList.toggle('active', scroll >= ranges[i][0] && scroll <= ranges[i][1]);
+  });
+}
+function setupNavigation() {
+  const targets = [0.04, 0.21, 0.35, 0.49, 0.635, 0.785, 0.94];
+  document.querySelectorAll('.nav-link').forEach((link, i) => link.addEventListener('click', e => {
+    e.preventDefault();
+    scrollTo({ top: (document.documentElement.scrollHeight - innerHeight) * targets[i], behavior: 'smooth' });
+  }));
+  document.querySelector('.contact-btn').addEventListener('click', e => {
+    e.preventDefault();
+    scrollTo({ top: (document.documentElement.scrollHeight - innerHeight) * 0.94, behavior: 'smooth' });
+  });
+  document.querySelectorAll('a,.chip,.card').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hot'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hot'));
+  });
 }
 function onWindowResize() {
-  sizes.width = innerWidth; sizes.height = innerHeight; camera.aspect = sizes.width / sizes.height; camera.updateProjectionMatrix();
-  renderer.setSize(sizes.width, sizes.height); renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); shaderUniforms.uResolution.value.set(sizes.width, sizes.height);
+  sizes.width = innerWidth; sizes.height = innerHeight;
+  camera.aspect = sizes.width / sizes.height; camera.updateProjectionMatrix();
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  shaderUniforms.uResolution.value.set(sizes.width, sizes.height);
 }
-addEventListener('mousemove', e => { cursorX = e.clientX; cursorY = e.clientY; const ci = document.querySelector('.cursor-inner'); ci.style.left = cursorX + 'px'; ci.style.top = cursorY + 'px'; targetMouseX = (e.clientX / innerWidth) * 2 - 1; targetMouseY = (e.clientY / innerHeight) * 2 - 1; });
+
+const isTouchDevice = window.matchMedia('(hover:none),(pointer:coarse)').matches;
+if (!isTouchDevice) {
+  addEventListener('mousemove', e => {
+    cursorX = e.clientX; cursorY = e.clientY;
+    document.querySelector('.cursor-inner').style.cssText = `left:${cursorX}px;top:${cursorY}px`;
+    targetMouseX = (e.clientX / innerWidth) * 2 - 1;
+    targetMouseY = (e.clientY / innerHeight) * 2 - 1;
+  });
+}
 addEventListener('resize', onWindowResize);
+
+/* ---------- main loop ---------- */
 const cursorOuter = document.querySelector('.cursor-outer');
 function animate() {
   requestAnimationFrame(animate);
@@ -403,23 +540,42 @@ function animate() {
   const targetScroll = maxScroll > 0 ? scrollY / maxScroll : 0;
   currentScroll += (targetScroll - currentScroll) * 0.025;
   mouseX += (targetMouseX - mouseX) * 0.05; mouseY += (targetMouseY - mouseY) * 0.05;
-  outerX += (cursorX - outerX) * 0.2; outerY += (cursorY - outerY) * 0.2;
-  cursorOuter.style.left = outerX + 'px'; cursorOuter.style.top = outerY + 'px';
+  if (!isTouchDevice) {
+    outerX += (cursorX - outerX) * 0.2; outerY += (cursorY - outerY) * 0.2;
+    cursorOuter.style.left = outerX + 'px'; cursorOuter.style.top = outerY + 'px';
+  }
   sculpt.rotation.y = mouseX * 0.25; sculpt.rotation.x = mouseY * 0.15;
   morph(clamp((currentScroll - 0.04) / 0.6, 0, 1) * 2, time);
   const vel = Math.abs(targetScroll - currentScroll), speedMul = 1 + vel * 9, turb = vel * 0.8;
-  for (let i = 0; i < sparkCount; i++) { const idx = i * 3, d = sparkData[i], pull = 0.05 + vel * 6; sp[idx] += d.sx * dt * speedMul - sp[idx] * pull * dt; sp[idx + 1] += d.sy * dt * speedMul; sp[idx + 2] += d.sz * dt * speedMul - sp[idx + 2] * pull * dt; const sw = d.swr * (1 + turb * 4); sp[idx] += Math.sin(time * d.sws + d.ph) * sw * dt; sp[idx + 2] += Math.cos(time * d.sws + d.ph) * sw * dt; if (sp[idx + 1] > 3 || Math.abs(sp[idx]) > 3.5 || Math.abs(sp[idx + 2]) > 3.5) { sp[idx + 1] = -2.5; sp[idx] = (R() - 0.5) * 3; sp[idx + 2] = (R() - 0.5) * 3; } }
+  for (let i = 0; i < sparkCount; i++) {
+    const idx = i * 3, d = sparkData[i], pull = 0.05 + vel * 6;
+    sp[idx]   += d.sx * dt * speedMul - sp[idx] * pull * dt;
+    sp[idx+1] += d.sy * dt * speedMul;
+    sp[idx+2] += d.sz * dt * speedMul - sp[idx+2] * pull * dt;
+    const sw = d.swr * (1 + turb * 4);
+    sp[idx]   += Math.sin(time * d.sws + d.ph) * sw * dt;
+    sp[idx+2] += Math.cos(time * d.sws + d.ph) * sw * dt;
+    if (sp[idx+1] > 3 || Math.abs(sp[idx]) > 3.5 || Math.abs(sp[idx+2]) > 3.5) {
+      sp[idx+1] = -2.5; sp[idx] = (R()-0.5)*3; sp[idx+2] = (R()-0.5)*3;
+    }
+  }
   sparkGeo.attributes.position.needsUpdate = true;
   const phi = currentScroll * Math.PI * 2, s = Math.sin(currentScroll * Math.PI);
   const y = 0.35 + s * 0.8, radius = 4.2 - s * 0.6;
   const ease = (Math.cos(Math.min(1, currentScroll / 0.28) * Math.PI) + 1) * 0.5;
   camera.position.lerp(new THREE.Vector3(radius * Math.sin(phi), y, radius * Math.cos(phi)), 0.025);
   camera.lookAt(new THREE.Vector3(-0.9 * ease, -0.15, 0));
-  shaderUniforms.uTime.value = time; shaderUniforms.uMouse.value.set(mouseX, -mouseY); shaderUniforms.uScroll.value = currentScroll;
+  shaderUniforms.uTime.value = time;
+  shaderUniforms.uMouse.value.set(mouseX, -mouseY);
+  shaderUniforms.uScroll.value = currentScroll;
   updateSlides(currentScroll); updateGridDots(currentScroll); updateActiveNav(currentScroll);
   renderer.render(scene, camera);
 }
-splitTitlesIntoChars(); onWindowResize(); animate(); setupNavigation();
+
+splitTitlesIntoChars();
+onWindowResize();
+animate();
+setupNavigation();
 </script>
 </body>
 </html>
