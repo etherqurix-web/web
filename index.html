@@ -22,6 +22,50 @@ body.hot .cursor-outer{width:56px;height:56px;border-color:var(--mag)}
 .main-header{display:flex;justify-content:space-between;align-items:center;width:100%;z-index:20;pointer-events:auto;padding:20px 0}
 .brand{font-size:14px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--ink)}
 .header-nav{display:flex;align-items:center;gap:24px}
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+.social-links{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.social-link{
+  color:var(--ink);
+  text-decoration:none;
+  font-family:var(--mono);
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  transition:color .3s ease;
+  position:relative;
+}
+
+.social-link:hover{
+  color:var(--mag);
+}
+
+.social-link::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-6px;
+  height:1px;
+  background:var(--mag);
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:transform .3s ease;
+}
+
+.social-link:hover::after{
+  transform:scaleX(1);
+}
+
 .nav-link{color:var(--ink);text-decoration:none;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;transition:color .3s}
 .nav-link:hover{color:var(--mag)}
 .header-nav .nav-link{position:relative}
@@ -93,7 +137,7 @@ body.hot .cursor-outer{width:56px;height:56px;border-color:var(--mag)}
 .grid-line:nth-child(5) .grid-dot.top{background:var(--mag);box-shadow:0 0 8px var(--mag)}
 
 @media(max-width:900px){
- .cinematic-container{padding:0 24px 30px}.header-nav{display:none}
+ .cinematic-container{padding:0 24px 30px}.header-nav{display:none}.social-links{display:none}
  #slide-1 .slide-title,#slide-1 .eyebrow,#slide-1 .col-1{margin-left:24px}
  #slide-1 .col-1,#slide-1 .col-2{width:70vw}#slide-1 .col-2{position:static;margin:14px 0 0 24px}#slide-1 .desc-row{display:block}
  #slide-2,#slide-3,#slide-4,#slide-5,#slide-6,#slide-7{left:24px;width:86vw}#slide-2 .slide-title,#slide-2 .slide-desc{margin-left:0;width:auto}
@@ -108,16 +152,58 @@ body.hot .cursor-outer{width:56px;height:56px;border-color:var(--mag)}
 <div class="cinematic-container">
   <div class="main-header">
     <div class="brand">Aetherquorix</div>
+
     <nav class="header-nav" aria-label="Main navigation">
-      <a href="#intelligence" class="nav-link" data-slide="0">Intelligence</a><span class="nav-dot"></span>
-      <a href="#systems" class="nav-link" data-slide="1">Systems</a><span class="nav-dot"></span>
-      <a href="#experiences" class="nav-link" data-slide="2">Experiences</a><span class="nav-dot"></span>
-      <a href="#products" class="nav-link" data-slide="3">Products</a><span class="nav-dot"></span>
-      <a href="#work" class="nav-link" data-slide="4">Work</a><span class="nav-dot"></span>
-      <a href="#about" class="nav-link" data-slide="5">About</a><span class="nav-dot"></span>
+      <a href="#intelligence" class="nav-link" data-slide="0">Intelligence</a>
+      <span class="nav-dot"></span>
+
+      <a href="#systems" class="nav-link" data-slide="1">Systems</a>
+      <span class="nav-dot"></span>
+
+      <a href="#experiences" class="nav-link" data-slide="2">Experiences</a>
+      <span class="nav-dot"></span>
+
+      <a href="#products" class="nav-link" data-slide="3">Products</a>
+      <span class="nav-dot"></span>
+
+      <a href="#work" class="nav-link" data-slide="4">Work</a>
+      <span class="nav-dot"></span>
+
+      <a href="#about" class="nav-link" data-slide="5">About</a>
+      <span class="nav-dot"></span>
+
       <a href="#contact" class="nav-link" data-slide="6">Contact</a>
     </nav>
-    <div class="header-actions"><a href="#" class="contact-btn">Start a Project <span class="btn-circle"></span></a></div>
+
+    <div class="header-actions">
+      <div class="social-links">
+        <a
+          href="https://www.instagram.com/aetherquorix/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-link"
+          aria-label="Instagram"
+        >
+          Instagram
+        </a>
+
+        <span class="nav-dot"></span>
+
+        <a
+          href="https://www.facebook.com/profile.php?id=61594644663028"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-link"
+          aria-label="Facebook"
+        >
+          Facebook
+        </a>
+      </div>
+
+      <a href="#" class="contact-btn">
+        Start a Project <span class="btn-circle"></span>
+      </a>
+    </div>
   </div>
 
   <div class="slide" id="slide-1" data-section="intelligence">
