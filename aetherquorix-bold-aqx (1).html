@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aetherquorix — AI Systems. Intelligent Automation. Digital Experiences.</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--ink:#06111f;--body:#33475e;--ice:#C6E6FD;--sky:#80AAD3;--steel:#5B86B6;--slate:#376593;--navy:#1B3554;--mag:#A81251;--mono:'JetBrains Mono',ui-monospace,monospace}
+*{margin:0;padding:0;box-sizing:border-box;user-select:none}
+html,body{width:100%;background:#f6f9fd;-ms-overflow-style:none;scrollbar-width:none}
+body{min-height:900vh;font-family:'Space Grotesk',sans-serif;color:var(--ink);overflow-x:hidden;cursor:none}
+*{cursor:none!important}
+::-webkit-scrollbar{display:none;width:0}
+#webgl{position:fixed;inset:0;width:100%;height:100%;z-index:1;outline:none}
+
+.cursor-inner{position:fixed;top:0;left:0;width:6px;height:6px;border:2px solid var(--ink);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999}
+.cursor-outer{position:fixed;top:0;left:0;width:40px;height:40px;border:1.5px solid rgba(6,17,31,.5);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9998;transition:width .3s,height .3s,border-color .3s}
+body.hot .cursor-outer{width:56px;height:56px;border-color:var(--mag)}
+
+.cinematic-container{position:fixed;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:0 60px 40px;box-sizing:border-box}
+.main-header{display:flex;justify-content:space-between;align-items:center;width:100%;z-index:20;pointer-events:auto;padding:20px 0}
+.brand{font-size:14px;font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--ink)}
+.header-nav{display:flex;align-items:center;gap:24px}
+.nav-link{color:var(--ink);text-decoration:none;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:2px;transition:color .3s}
+.nav-link:hover{color:var(--mag)}
+.header-nav .nav-link{position:relative}
+.header-nav .nav-link::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:var(--mag);transform:scaleX(0);transform-origin:center;transition:transform .3s ease}
+.header-nav .nav-link.active::after{transform:scaleX(1)}
+.header-nav .nav-link.active{color:var(--navy)}
+
+.nav-dot{width:3px;height:3px;background:rgba(27,53,84,.35);border-radius:50%}
+.contact-btn,.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:var(--ink);color:#fff;text-decoration:none;font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:600;border-radius:20px;transition:transform .3s,background .3s}
+.btn-circle{width:6px;height:6px;border:1px solid var(--mag);border-radius:50%;background:var(--mag)}
+.contact-btn:hover,.cta-btn:hover{transform:scale(1.05);background:var(--mag)}
+.contact-btn:hover .btn-circle,.cta-btn:hover .btn-circle{border-color:#fff;background:#fff}
+
+.slide{position:absolute;bottom:12%;pointer-events:none}
+#slide-1{left:0;width:100%}
+#slide-1 .slide-title{margin-left:60px}
+#slide-1 .desc-row{position:relative;display:flex;width:100%}
+#slide-1 .col-1{margin-left:60px;width:calc(25vw - 60px);color:var(--navy);font-weight:500}
+#slide-1 .col-2{position:absolute;left:calc(25vw + 40px);width:calc(25vw - 60px)}
+#slide-1 .eyebrow{margin:0 0 22px 60px}
+#slide-2{left:0;width:100%}
+#slide-2 .slide-title{margin-left:calc(25vw + 40px)}
+#slide-2 .slide-desc{margin-left:calc(50vw + 20px);width:calc(25vw - 60px)}
+#slide-3{left:calc(50vw + 20px);width:30vw}
+#slide-3 .slide-title{white-space:nowrap}
+#slide-4{left:calc(25% + 40px);max-width:640px}
+#slide-5{left:60px;width:calc(100% - 120px)}
+#slide-6{left:calc(25vw + 40px);width:55vw}
+#slide-7{left:60px;max-width:640px}
+#slide-4 .slide-desc,#slide-6 .slide-desc,#slide-7 .slide-desc{max-width:520px}
+
+.slide-title{font-size:clamp(40px,6.2vw,96px);text-wrap:balance;line-height:1;font-weight:300;letter-spacing:-1.5px;margin-bottom:20px;color:var(--ink)}
+.slide-desc,.rev{font-size:16px;line-height:1.7;font-weight:600;color:var(--ink);letter-spacing:.2px;opacity:0;text-shadow:0 1px 2px rgba(255,255,255,.55);transform:translateY(30px);transition:opacity .8s cubic-bezier(.25,1,.5,1),transform .8s cubic-bezier(.25,1,.5,1);transition-delay:.4s}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--slate);text-transform:uppercase}
+.slide.active .slide-desc,.slide.active .rev{opacity:1;transform:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;padding:7px 12px;border:1px solid rgba(27,53,84,.35);border-radius:14px;color:var(--navy);background:rgba(255,255,255,.55);text-transform:uppercase;transition:border-color .3s,background .3s}
+.slide.active .chip:hover{border-color:var(--mag);background:rgba(168,18,81,.08)}
+
+.prods{margin-top:22px;max-width:620px}
+.prod{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:12px 0;border-top:1px solid rgba(27,53,84,.28);font-size:15px;line-height:1.5;color:var(--ink);font-weight:600;text-shadow:0 1px 2px rgba(255,255,255,.5)}
+.prod b{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:2px;color:var(--mag);padding-top:2px}
+.cards{display:flex;gap:18px;margin-top:6px}
+.card{width:22vw;min-width:220px;padding:20px;background:rgba(255,255,255,.62);border:1px solid rgba(27,53,84,.18);backdrop-filter:blur(6px);transition:border-color .3s}
+.slide.active .card:hover{border-color:var(--mag)}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--slate);text-transform:uppercase}
+.card h3{font-size:19px;font-weight:500;margin:10px 0 8px;color:var(--ink)}
+.card p{font-size:14px;line-height:1.6;color:var(--ink);font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.5)}
+.steps{display:flex;gap:28px;margin-top:26px}
+.steps div{flex:1;max-width:220px;border-top:1px solid rgba(27,53,84,.3);padding-top:14px}
+.steps b{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--mag)}
+.steps h4{font-size:16px;font-weight:500;margin:6px 0}
+.steps p{font-size:14px;line-height:1.6;color:var(--ink);font-weight:500;text-shadow:0 1px 2px rgba(255,255,255,.5)}
+.cta{display:flex;align-items:center;gap:28px;margin-top:26px;flex-wrap:wrap}
+.mail{font-size:22px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--mag);user-select:text}
+
+.slide-title .char{display:inline-block;opacity:0;transform:translateY(50px);filter:blur(12px);transition:opacity .8s cubic-bezier(.25,1,.5,1),transform .8s cubic-bezier(.25,1,.5,1),filter .8s cubic-bezier(.25,1,.5,1)}
+.slide.active .slide-title .char{opacity:1;transform:none;filter:blur(0)}
+.slide.active{pointer-events:auto}
+
+.story-dashes{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;gap:8px}
+.story-dash{width:2px;height:26px;background:rgba(27,53,84,.18);border-radius:2px}
+.story-dash-fill{width:100%;height:0%;background:linear-gradient(var(--navy) 60%,var(--mag));border-radius:2px}
+.grid-horizontal-line{position:fixed;top:70px;left:0;right:0;height:1px;background:rgba(27,53,84,.16);z-index:5;pointer-events:none}
+.grid-lines{position:fixed;top:0;left:40px;right:40px;width:calc(100% - 80px);height:100vh;display:flex;justify-content:space-between;z-index:5;pointer-events:none}
+.grid-line{position:relative;width:1px;height:100%;background:rgba(27,53,84,.13)}
+.grid-line:nth-child(3){margin-top:70px;height:calc(100vh - 70px)}
+.grid-dot{position:absolute;left:50%;transform:translate(-50%,-50%);width:6px;height:6px;border-radius:50%;background:rgba(27,53,84,.45);box-shadow:0 0 5px rgba(91,134,182,.4)}
+.grid-line:nth-child(5) .grid-dot.top{background:var(--mag);box-shadow:0 0 8px var(--mag)}
+
+@media(max-width:900px){
+ .cinematic-container{padding:0 24px 30px}.header-nav{display:none}
+ #slide-1 .slide-title,#slide-1 .eyebrow,#slide-1 .col-1{margin-left:24px}
+ #slide-1 .col-1,#slide-1 .col-2{width:70vw}#slide-1 .col-2{position:static;margin:14px 0 0 24px}#slide-1 .desc-row{display:block}
+ #slide-2,#slide-3,#slide-4,#slide-5,#slide-6,#slide-7{left:24px;width:86vw}#slide-2 .slide-title,#slide-2 .slide-desc{margin-left:0;width:auto}
+ .slide-title{font-size:13vw}.cards,.steps{flex-direction:column;gap:10px}.card{width:86vw;padding:12px 16px}.card p,.steps p{display:none}.prod{grid-template-columns:80px 1fr;font-size:13px}
+}
+</style>
+</head>
+<body>
+<div class="cursor-inner"></div>
+<div class="cursor-outer"></div>
+
+<div class="cinematic-container">
+  <div class="main-header">
+    <div class="brand">Aetherquorix</div>
+    <nav class="header-nav" aria-label="Main navigation">
+      <a href="#intelligence" class="nav-link" data-slide="0">Intelligence</a><span class="nav-dot"></span>
+      <a href="#systems" class="nav-link" data-slide="1">Systems</a><span class="nav-dot"></span>
+      <a href="#experiences" class="nav-link" data-slide="2">Experiences</a><span class="nav-dot"></span>
+      <a href="#products" class="nav-link" data-slide="3">Products</a><span class="nav-dot"></span>
+      <a href="#work" class="nav-link" data-slide="4">Work</a><span class="nav-dot"></span>
+      <a href="#about" class="nav-link" data-slide="5">About</a><span class="nav-dot"></span>
+      <a href="#contact" class="nav-link" data-slide="6">Contact</a>
+    </nav>
+    <div class="header-actions"><a href="#" class="contact-btn">Start a Project <span class="btn-circle"></span></a></div>
+  </div>
+
+  <div class="slide" id="slide-1" data-section="intelligence">
+    <p class="eyebrow rev">AI Systems. Intelligent Automation. Digital Experiences.</p>
+    <h2 class="slide-title">Raw <br>Intelligence</h2>
+    <div class="desc-row">
+      <p class="slide-desc col-1">We Build Intelligent Systems, Digital Products &amp; Immersive Experiences.</p>
+      <p class="slide-desc col-2">Every system begins with information. Data, ideas and complexity are the raw material.</p>
+    </div>
+  </div>
+  <div class="slide" id="slide-2" data-section="systems">
+    <h2 class="slide-title">Intelligent <br>Systems</h2>
+    <p class="slide-desc">We transform complexity through AI, automation, software and intelligent workflows.</p>
+  </div>
+  <div class="slide" id="slide-3" data-section="experiences">
+    <h2 class="slide-title">Engineered <br>Experiences</h2>
+    <p class="slide-desc">From models and automation to interfaces, products, design and immersive 3D environments.</p>
+    <div class="chips rev"><span class="chip">Generative AI</span><span class="chip">AI Automation</span><span class="chip">AI Agents</span><span class="chip">Software</span><span class="chip">Digital Products</span><span class="chip">Graphic Design</span><span class="chip">3D Visualization</span></div>
+  </div>
+  <div class="slide" id="slide-4" data-section="products">
+    <h2 class="slide-title">Built for <br>What’s Next</h2>
+    <p class="slide-desc">Technology becomes powerful when intelligence turns into something people can actually use. Our AI products:</p>
+    <div class="prods rev">
+      <div class="prod"><b>DOC AI</b><span>Reads your documents and answers questions about them in seconds.</span></div>
+      <div class="prod"><b>TRADE AI</b><span>Turns market data into clear, risk-aware insights for faster decisions.</span></div>
+      <div class="prod"><b>HIRE AI</b><span>Screens and ranks candidates so hiring teams find the right people sooner.</span></div>
+    </div>
+  </div>
+  <div class="slide" id="slide-5" data-section="work">
+    <h2 class="slide-title">Selected Work</h2>
+    <div class="cards rev">
+      <div class="card"><span class="tag">AI · Documents</span><h3>Document intelligence platform</h3><p>Reads contracts and reports, then answers questions with the source shown.</p></div>
+      <div class="card"><span class="tag">Automation · Operations</span><h3>Workflow automation suite</h3><p>Connects your tools so approvals, reports and hand-offs run on their own.</p></div>
+      <div class="card"><span class="tag">3D · Product</span><h3>Interactive 3D showcase</h3><p>Lets customers rotate, configure and explore a product right in the browser.</p></div>
+    </div>
+  </div>
+  <div class="slide" id="slide-6" data-section="about">
+    <h2 class="slide-title">About Us</h2>
+    <p class="slide-desc">Aetherquorix is an AI and technology studio. We design and build intelligent systems, digital products and immersive experiences, from AI agents and automation to software, graphic design and 3D.</p>
+    <div class="steps rev">
+      <div><b>A</b><h4>Understand</h4><p>We start with your data, goals and constraints.</p></div>
+      <div><b>Q</b><h4>Build the intelligence</h4><p>We design the AI, automation and software that does the work.</p></div>
+      <div><b>X</b><h4>Deliver</h4><p>We ship the finished product, interface and experience.</p></div>
+    </div>
+  </div>
+  <div class="slide" id="slide-7" data-section="contact">
+    <h2 class="slide-title">Let’s Talk</h2>
+    <p class="slide-desc">Tell us what you want to build, whether an AI system, automation, product, design or 3D experience, and we’ll help you shape it.</p>
+    <div class="cta rev"><a class="mail" href="mailto:hello@aetherquorix.com">hello@aetherquorix.com</a><a class="cta-btn" href="mailto:hello@aetherquorix.com?subject=New%20project">Start a Project <span class="btn-circle"></span></a></div>
+  </div>
+</div>
+
+<div class="grid-horizontal-line"></div>
+<div class="grid-lines">
+  <div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
+  <div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
+  <div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
+  <div class="grid-line"><div class="grid-dot top"></div><div class="grid-dot bottom"></div></div>
+  <div class="grid-line story-progress-container">
+    <div class="grid-dot top"></div><div class="grid-dot bottom"></div>
+    <div class="story-dashes" aria-hidden="true">
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-1"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-2"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-3"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-4"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-5"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-6"></div></div>
+      <div class="story-dash"><div class="story-dash-fill" id="dash-fill-7"></div></div>
+    </div>
+  </div>
+</div>
+
+<canvas id="webgl"></canvas>
+
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const canvas = document.querySelector('#webgl');
+const clock = new THREE.Clock();
+const R = Math.random, clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+let currentScroll = 0, mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
+let cursorX = innerWidth / 2, cursorY = innerHeight / 2, outerX = cursorX, outerY = cursorY;
+const sizes = { width: innerWidth, height: innerHeight };
+const shaderUniforms = {
+  uTime: { value: 0 }, uResolution: { value: new THREE.Vector2(innerWidth, innerHeight) },
+  uMouse: { value: new THREE.Vector2() }, uScroll: { value: 0 }
+};
+
+/* ---------- scene / camera / renderer ---------- */
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#f6f9fd');
+scene.fog = new THREE.FogExp2('#f6f9fd', 0.01);
+const camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 100);
+camera.position.set(0, 0.2, 3.0);
+scene.add(camera);
+createBackgroundShader();
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
+renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 2.0;
+
+/* ---------- lighting: ice key, steel rim, magenta accent ---------- */
+scene.add(new THREE.AmbientLight('#80AAD3', 0.18));
+const key = new THREE.SpotLight('#C6E6FD', 18);
+key.position.set(4, 6, 3); key.angle = Math.PI / 4; key.penumbra = 0.9; key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048); key.shadow.camera.near = 1; key.shadow.camera.far = 15; key.shadow.bias = -0.001;
+scene.add(key);
+const rim = new THREE.DirectionalLight('#5B86B6', 10); rim.position.set(-5, 3, -4); scene.add(rim);
+const mag = new THREE.PointLight('#A81251', 28, 12); mag.position.set(-3, -1, 3); scene.add(mag);
+const fill = new THREE.DirectionalLight('#1B3554', 1.2); fill.position.set(-2, -4, 2); scene.add(fill);
+
+/* ---------- A → Q → X sculpture ---------- */
+const N = 2600, NODES = 120;
+const A = new Float32Array(N * 3), Q = new Float32Array(N * 3), X = new Float32Array(N * 3);
+const pos = new Float32Array(N * 3), col = new Float32Array(N * 3), delay = new Float32Array(N);
+const lerpPt = (a, b, t) => a + (b - a) * t;
+const strokesA = [[-0.85, -1.2, 0, 1.25], [0, 1.25, 0.85, -1.2], [-0.5, -0.35, 0.5, -0.35]];
+const cols = [[0.035, 0.09, 0.16], [0.07, 0.16, 0.27], [0.12, 0.25, 0.39], [0.66, 0.07, 0.32]];
+for (let i = 0; i < N; i++) {
+  // A: fragmented, pixel-snapped strokes with floating debris
+  const r = R(), s = strokesA[r < 0.4 ? 0 : r < 0.8 ? 1 : 2], t = R();
+  let ax = lerpPt(s[0], s[2], t), ay = lerpPt(s[1], s[3], t), az = (R() - 0.5) * 0.32;
+  if (R() < 0.22) { const k = 0.25 + R() * 0.65; ax += (R() - 0.5) * k * 1.6; ay += (R() - 0.5) * k * 1.6; az += (R() - 0.5) * k; }
+  A.set([Math.round(ax / 0.075) * 0.075, Math.round(ay / 0.075) * 0.075, Math.round(az / 0.075) * 0.075], i * 3);
+  // Q: processing ring, dense core, output tail
+  const u = R(); let qx, qy;
+  if (u < 0.6) { const th = R() * 6.2832, rr = 1.15 + (R() - 0.5) * 0.055; qx = rr * Math.cos(th); qy = rr * Math.sin(th) + 0.1; }
+  else if (u < 0.85) { const th = R() * 6.2832, rr = Math.sqrt(R()) * 0.78; qx = rr * Math.cos(th); qy = rr * Math.sin(th) + 0.1; }
+  else { const k = R(); qx = lerpPt(0.55, 1.1, k) + (R() - 0.5) * 0.05; qy = lerpPt(-0.6, -1.25, k) + (R() - 0.5) * 0.05; }
+  Q.set([qx, qy, (R() - 0.5) * 0.24], i * 3);
+  // X: two exact diagonals, tight tolerance
+  const d = R() < 0.5 ? 1 : -1, k = R(), w = (R() - 0.5) * 0.12;
+  X.set([lerpPt(-1, 1, k) + w * 0.5, d * lerpPt(-1.2, 1.2, k) + w, (R() - 0.5) * 0.14], i * 3);
+  const c = cols[R() < 0.9 ? Math.floor(R() * 3) : 3]; col.set(c, i * 3);
+  delay[i] = R() * 0.45;
+}
+pos.set(A);
+
+const sparkTex = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 16;
+  const x = c.getContext('2d'), g = x.createRadialGradient(8, 8, 0, 8, 8, 8);
+  g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.25, 'rgba(255,255,255,.85)');
+  g.addColorStop(0.6, 'rgba(255,255,255,.3)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+  x.fillStyle = g; x.fillRect(0, 0, 16, 16); return new THREE.CanvasTexture(c);
+})();
+
+const sculpt = new THREE.Group();
+scene.add(sculpt);
+const dataGeo = new THREE.BufferGeometry();
+dataGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+dataGeo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+sculpt.add(new THREE.Points(dataGeo, new THREE.PointsMaterial({
+  size: 0.060, vertexColors: true, transparent: true, opacity: 1.0,
+  blending: THREE.NormalBlending, depthWrite: false, map: sparkTex
+})));
+
+// neural network: each node links to its two nearest neighbours in the Q layout
+const pairs = [];
+for (let i = 0; i < NODES; i++) {
+  const d = [];
+  for (let j = 0; j < NODES; j++) if (j !== i) {
+    const dx = Q[i * 3] - Q[j * 3], dy = Q[i * 3 + 1] - Q[j * 3 + 1], dz = Q[i * 3 + 2] - Q[j * 3 + 2];
+    d.push([dx * dx + dy * dy + dz * dz, j]);
+  }
+  d.sort((a, b) => a[0] - b[0]); pairs.push([i, d[0][1]], [i, d[1][1]]);
+}
+const lineArr = new Float32Array(pairs.length * 6);
+const lineGeo = new THREE.BufferGeometry();
+lineGeo.setAttribute('position', new THREE.BufferAttribute(lineArr, 3));
+const lineMat = new THREE.LineBasicMaterial({ color: '#376593', transparent: true, opacity: 0, blending: THREE.NormalBlending, depthWrite: false });
+sculpt.add(new THREE.LineSegments(lineGeo, lineMat));
+
+const ringMat = new THREE.MeshBasicMaterial({ color: '#A81251', transparent: true, opacity: 0, blending: THREE.NormalBlending });
+const ring = new THREE.Mesh(new THREE.TorusGeometry(1.15, 0.012, 8, 128), ringMat);
+ring.position.y = 0.1; sculpt.add(ring);
+
+// engineered X: refined particle-built final mark
+// The final state stays faithful to the A→Q→X particle language instead of
+// switching to solid bars. A denser core, tapered particle trails and a very
+// restrained magenta edge make the X feel like the finished product.
+const xGroup = new THREE.Group();
+
+const xCount = 1800;
+const xPos = new Float32Array(xCount * 3);
+const xCol = new Float32Array(xCount * 3);
+for (let i = 0; i < xCount; i++) {
+  const branch = Math.random() < 0.5 ? 1 : -1;
+  const t = Math.random();
+  const spread = (Math.random() - 0.5) * (0.045 + Math.sin(t * Math.PI) * 0.13);
+  const x = (t * 2 - 1);
+  const y = branch * (t * 2 - 1);
+  const z = (Math.random() - 0.5) * (0.11 + Math.sin(t * Math.PI) * 0.07);
+
+  xPos[i * 3] = x + spread;
+  xPos[i * 3 + 1] = y + spread * branch;
+  xPos[i * 3 + 2] = z;
+
+  const edge = Math.random();
+  const c = edge > 0.92 ? [0.66, 0.07, 0.32] : (Math.random() > 0.45 ? [0.035, 0.09, 0.16] : [0.07, 0.16, 0.27]);
+  xCol.set(c, i * 3);
+}
+
+const xGeo = new THREE.BufferGeometry();
+xGeo.setAttribute('position', new THREE.BufferAttribute(xPos, 3));
+xGeo.setAttribute('color', new THREE.BufferAttribute(xCol, 3));
+
+const xPoints = new THREE.Points(xGeo, new THREE.PointsMaterial({
+  size: 0.058,
+  vertexColors: true,
+  transparent: true,
+  opacity: 1.0,
+  depthWrite: false,
+  blending: THREE.NormalBlending,
+  map: sparkTex
+}));
+xGroup.add(xPoints);
+
+// Fine inner diagonals: still lightweight and particle-adjacent, never a solid bar.
+const xLineMat = new THREE.LineBasicMaterial({
+  color: '#1B3554',
+  transparent: true,
+  opacity: 0.18,
+  depthWrite: false
+});
+const xLineGeo = new THREE.BufferGeometry();
+xLineGeo.setAttribute('position', new THREE.Float32BufferAttribute([
+  -1.0,-1.2,0.02, 1.0,1.2,0.02,
+  -1.0,1.2,0.02, 1.0,-1.2,0.02
+], 3));
+xGroup.add(new THREE.LineSegments(xLineGeo, xLineMat));
+
+const xHalo = new THREE.Points(xGeo.clone(), new THREE.PointsMaterial({
+  size: 0.085,
+  color: '#5B86B6',
+  transparent: true,
+  opacity: 0.08,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+  map: sparkTex
+}));
+xGroup.add(xHalo);
+
+xGroup.visible = false;
+xGroup.scale.setScalar(0.001);
+sculpt.add(xGroup);
+
+function morph(m, time) {
+  const seg = m < 1 ? 0 : 1, f = m - seg, from = seg ? Q : A, to = seg ? X : Q;
+  for (let i = 0; i < N; i++) {
+    let t = clamp((f - delay[i]) / 0.55, 0, 1); t = t * t * (3 - 2 * t);
+    const amp = 0.015 + Math.sin(t * Math.PI) * 0.3 + (m < 0.3 ? (0.3 - m) * 0.2 : 0);
+    for (let k = 0; k < 3; k++) {
+      const j = i * 3 + k;
+      pos[j] = from[j] + (to[j] - from[j]) * t + Math.sin(time * 1.3 + i * 0.7 + k * 2.1) * amp;
+    }
+  }
+  dataGeo.attributes.position.needsUpdate = true;
+  for (let p = 0; p < pairs.length; p++) for (let e = 0; e < 2; e++) for (let k = 0; k < 3; k++)
+    lineArr[p * 6 + e * 3 + k] = pos[pairs[p][e] * 3 + k];
+  lineGeo.attributes.position.needsUpdate = true;
+  const qw = Math.max(0, 1 - Math.abs(m - 1) * 1.4);
+  lineMat.opacity = 0.55 * qw; ringMat.opacity = 0.75 * qw;
+  const xw = clamp((m - 1.3) / 0.6, 0, 1), s = xw * xw * (3 - 2 * xw);
+  xGroup.visible = s > 0.01;
+  xGroup.scale.setScalar(Math.max(s, 0.001));
+  xGroup.rotation.z = Math.sin(time * 0.35) * 0.008 * s;
+  xGroup.position.z = Math.sin(time * 0.5) * 0.018 * s;
+}
+
+/* ---------- ambient data particles ---------- */
+const sparkCount = 450, sparkData = [];
+const sparkGeo = new THREE.BufferGeometry();
+const sp = new Float32Array(sparkCount * 3), sc = new Float32Array(sparkCount * 3);
+for (let i = 0; i < sparkCount; i++) {
+  sp.set([(R() - 0.5) * 6.5, (R() - 0.5) * 5 - 0.5, (R() - 0.5) * 6.5], i * 3);
+  const c = R() < 0.1 ? cols[3] : R() < 0.5 ? cols[0] : cols[1]; sc.set(c, i * 3);
+  sparkData.push({ sx: (R() - 0.5) * 0.4, sy: 0.15 + R() * 0.3, sz: (R() - 0.5) * 0.4, sws: 0.5 + R() * 1.5, swr: 0.05 + R() * 0.15, ph: R() * 6.2832 });
+}
+sparkGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+sparkGeo.setAttribute('color', new THREE.BufferAttribute(sc, 3));
+const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ size: 0.026, vertexColors: true, transparent: true, opacity: 0.62, blending: THREE.NormalBlending, depthWrite: false, map: sparkTex }));
+scene.add(sparks);
+
+/* ---------- liquid data background shader ---------- */
+function createBackgroundShader() {
+  const mat = new THREE.ShaderMaterial({
+    uniforms: shaderUniforms, depthWrite: false, depthTest: false,
+    vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+    fragmentShader: `
+      varying vec2 vUv; uniform float uTime; uniform vec2 uResolution; uniform vec2 uMouse; uniform float uScroll;
+      void main(){
+        vec2 uv=(gl_FragCoord.xy-0.5*uResolution.xy)/uResolution.y;
+        float aspect=uResolution.x/uResolution.y, time=uTime*0.08, sd=uScroll*5.0;
+        vec2 w=uv;
+        w.x+=sin(uv.y*2.5+time*0.2+sd)*0.35; w.y+=cos(uv.x*2.5-time*0.15-sd*0.8)*0.35;
+        w.x+=sin(uv.y*1.2-time*0.1-sd*1.5)*0.25; w.y+=cos(uv.x*1.2+time*0.18+sd*1.2)*0.25;
+        w+=vec2(uScroll*0.04,-uScroll*0.02)+vec2(uMouse.x*aspect*0.05,uMouse.y*0.05);
+        vec2 d1=vec2(cos(0.6),sin(0.6)), d2=vec2(cos(-0.7),sin(-0.7)), d3=vec2(cos(1.2),sin(1.2));
+        float w1=sin(dot(w,d1)*2.4+time);
+        float w2=cos(dot(w,d2)*3.2-time*1.4+w1*0.4);
+        float w3=sin(dot(w,d3)*4.0+time*1.8+w2*0.5);
+        float f=w1*0.50+w2*0.35+w3*0.15;
+        float crest=pow(max(0.0,1.0-abs(f-0.1)),2.5)*0.5+pow(max(0.0,1.0-abs(f-0.15)),8.0)*0.9;
+        float t=smoothstep(0.0,1.0,uScroll);
+        vec3 paper=vec3(0.965,0.975,0.992);
+        vec3 wash=mix(vec3(0.82,0.90,0.97),vec3(0.80,0.86,0.96),t);
+        vec3 line=mix(vec3(0.20,0.38,0.62),vec3(0.17,0.30,0.60),t);
+        float sheen=pow(max(0.0,1.0-abs(f-0.1)),2.5);
+        float spec=pow(max(0.0,1.0-abs(f-0.15)),8.0);
+        vec3 color=mix(paper,wash,smoothstep(-0.6,0.8,f)*0.6+sheen*0.3);
+        color=mix(color,line,clamp(spec*0.9+sheen*0.06,0.0,1.0));
+        float mg=pow(max(0.0,1.0-abs(f+0.3)),12.0)*(0.5+0.5*sin(uTime*0.25+uv.x*3.0));
+        color=mix(color,vec3(0.66,0.07,0.32),clamp(mg*(0.6+0.4*t),0.0,1.0)*0.85);
+        color*=1.0-dot(uv,uv)*0.05;
+        gl_FragColor=vec4(color,1.0);
+      }`
+  });
+  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), mat);
+  mesh.position.set(0, 0, -8); mesh.renderOrder = -10; camera.add(mesh);
+}
+
+/* ---------- UI helpers ---------- */
+function splitTitlesIntoChars() {
+  document.querySelectorAll('.slide-title').forEach(title => {
+    let html = '', n = 0;
+    title.innerHTML.split(/(<br\s*\/?>)/i).forEach(part => {
+      if (part.toLowerCase().startsWith('<br')) { html += part; return; }
+      for (const ch of part) {
+        if (ch === ' ') html += ' ';
+        else html += `<span class="char" style="transition-delay:${n++ * 0.035}s">${ch}</span>`;
+      }
+    });
+    title.innerHTML = html;
+  });
+}
+function updateGridDots(scroll) {
+  document.querySelectorAll('.grid-dot').forEach((dot, i) => {
+    const startY = (i * 17) % 80 + 10; let speed = 90 + (i * 55) % 180;
+    if (i % 2 === 0) speed = -speed;
+    dot.style.top = `${(((startY + scroll * speed) % 100) + 100) % 100}%`;
+  });
+}
+function updateSlides(scroll) {
+  const n = 7;
+  for (let i = 1; i <= n; i++) {
+    const fill = document.getElementById(`dash-fill-${i}`);
+    if (fill) fill.style.height = `${clamp((scroll - (i - 1) / n) * n, 0, 1) * 100}%`;
+  }
+  const ranges = [[-0.1, 0.10], [0.15, 0.27], [0.29, 0.41], [0.43, 0.55], [0.57, 0.70], [0.72, 0.85], [0.87, 1.05]];
+  ranges.forEach(([a, b], i) => document.getElementById(`slide-${i + 1}`).classList.toggle('active', scroll >= a && scroll <= b));
+}
+function setupNavigation() {
+  // Header is now a real chapter navigator: every item lands inside its matching story section.
+  const targets = [0.04, 0.21, 0.35, 0.49, 0.635, 0.785, 0.94];
+  document.querySelectorAll('.nav-link').forEach((link, i) => link.addEventListener('click', e => {
+    e.preventDefault();
+    scrollTo({ top: (document.documentElement.scrollHeight - innerHeight) * targets[i], behavior: 'smooth' });
+  }));
+
+  document.querySelector('.contact-btn').addEventListener('click', e => {
+    e.preventDefault();
+    scrollTo({ top: (document.documentElement.scrollHeight - innerHeight) * 0.94, behavior: 'smooth' });
+  });
+
+  document.querySelectorAll('a,.chip,.card').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hot'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hot'));
+  });
+}
+
+function updateActiveNav(scroll) {
+  const ranges = [[-0.1,0.10],[0.15,0.27],[0.29,0.41],[0.43,0.55],[0.57,0.70],[0.72,0.85],[0.87,1.05]];
+  document.querySelectorAll('.nav-link').forEach((link, i) => {
+    link.classList.toggle('active', scroll >= ranges[i][0] && scroll <= ranges[i][1]);
+  });
+}
+function onWindowResize() {
+  sizes.width = innerWidth; sizes.height = innerHeight;
+  camera.aspect = sizes.width / sizes.height; camera.updateProjectionMatrix();
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  shaderUniforms.uResolution.value.set(sizes.width, sizes.height);
+}
+addEventListener('mousemove', e => {
+  cursorX = e.clientX; cursorY = e.clientY;
+  const ci = document.querySelector('.cursor-inner');
+  ci.style.left = cursorX + 'px'; ci.style.top = cursorY + 'px';
+  targetMouseX = (e.clientX / innerWidth) * 2 - 1; targetMouseY = (e.clientY / innerHeight) * 2 - 1;
+});
+addEventListener('resize', onWindowResize);
+
+/* ---------- main loop ---------- */
+const cursorOuter = document.querySelector('.cursor-outer');
+function animate() {
+  requestAnimationFrame(animate);
+  const dt = Math.min(clock.getDelta(), 0.05), time = clock.getElapsedTime();
+  const maxScroll = document.documentElement.scrollHeight - innerHeight;
+  const targetScroll = maxScroll > 0 ? scrollY / maxScroll : 0;
+  currentScroll += (targetScroll - currentScroll) * 0.025;
+  mouseX += (targetMouseX - mouseX) * 0.05; mouseY += (targetMouseY - mouseY) * 0.05;
+  outerX += (cursorX - outerX) * 0.2; outerY += (cursorY - outerY) * 0.2;
+  cursorOuter.style.left = outerX + 'px'; cursorOuter.style.top = outerY + 'px';
+
+  sculpt.rotation.y = mouseX * 0.25; sculpt.rotation.x = mouseY * 0.15;
+  morph(clamp((currentScroll - 0.04) / 0.6, 0, 1) * 2, time);
+
+  // data particles: swirl faster on scroll, drawn toward the A→Q→X core
+  const vel = Math.abs(targetScroll - currentScroll), speedMul = 1 + vel * 9, turb = vel * 0.8;
+  for (let i = 0; i < sparkCount; i++) {
+    const idx = i * 3, d = sparkData[i], pull = 0.05 + vel * 6;
+    sp[idx] += d.sx * dt * speedMul - sp[idx] * pull * dt;
+    sp[idx + 1] += d.sy * dt * speedMul;
+    sp[idx + 2] += d.sz * dt * speedMul - sp[idx + 2] * pull * dt;
+    const sw = d.swr * (1 + turb * 4);
+    sp[idx] += Math.sin(time * d.sws + d.ph) * sw * dt;
+    sp[idx + 2] += Math.cos(time * d.sws + d.ph) * sw * dt;
+    if (sp[idx + 1] > 3 || Math.abs(sp[idx]) > 3.5 || Math.abs(sp[idx + 2]) > 3.5) {
+      sp[idx + 1] = -2.5; sp[idx] = (R() - 0.5) * 3; sp[idx + 2] = (R() - 0.5) * 3;
+    }
+  }
+  sparkGeo.attributes.position.needsUpdate = true;
+
+  // 360° scroll orbit
+  const phi = currentScroll * Math.PI * 2, s = Math.sin(currentScroll * Math.PI);
+  const y = 0.35 + s * 0.8, radius = 4.2 - s * 0.6;
+  const ease = (Math.cos(Math.min(1, currentScroll / 0.28) * Math.PI) + 1) * 0.5;
+  camera.position.lerp(new THREE.Vector3(radius * Math.sin(phi), y, radius * Math.cos(phi)), 0.025);
+  camera.lookAt(new THREE.Vector3(-0.9 * ease, -0.15, 0));
+
+  shaderUniforms.uTime.value = time;
+  shaderUniforms.uMouse.value.set(mouseX, -mouseY);
+  shaderUniforms.uScroll.value = currentScroll;
+  updateSlides(currentScroll); updateGridDots(currentScroll); updateActiveNav(currentScroll);
+  renderer.render(scene, camera);
+}
+
+splitTitlesIntoChars();
+onWindowResize();
+animate();
+setupNavigation();
+</script>
+</body>
+</html>
